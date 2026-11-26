@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="حصصي">
+<meta name="theme-color" content="#7c3aed">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<title>حصصي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--p:#7c3aed;--p2:#06b6d4;--bg:#f6f4ff;--card:#fff;--tx:#1e1b4b;--mu:#6b7280;--ok:#10b981;--bad:#ef4444;--wa:#22c55e;--bd:#ece9fb;--sh:0 8px 24px rgba(91,33,182,.10)}
+@media (prefers-color-scheme:dark){:root{--bg:#0f0d1f;--card:#1a1733;--tx:#ede9fe;--mu:#a5a3c2;--bd:#2a2650;--sh:0 8px 24px rgba(0,0,0,.35)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:Cairo,-apple-system,system-ui,sans-serif;font-size:16px}
+body{background:radial-gradient(circle at 100% 0,#e9d5ff55,transparent 40%),radial-gradient(circle at 0 30%,#a5f3fc44,transparent 40%),var(--bg);min-height:100vh}
+header{position:sticky;top:0;z-index:5;background:linear-gradient(135deg,#7c3aed,#c026d3 55%,#f97316);color:#fff;padding:calc(env(safe-area-inset-top) + 12px) 16px 16px;display:flex;align-items:center;gap:10px;border-radius:0 0 26px 26px;box-shadow:0 10px 30px rgba(124,58,237,.35)}
+header h1{font-size:22px;margin:0;font-weight:800;line-height:1.2}
+header .hd{flex:1}header .hd small{display:block;font-size:13px;opacity:.9;font-weight:600}
+header button{background:rgba(255,255,255,.22);border:0;color:#fff;border-radius:16px;width:48px;height:48px;font-size:24px;font-weight:800;backdrop-filter:blur(6px)}
+main{padding:16px 14px calc(env(safe-area-inset-bottom) + 100px);max-width:640px;margin:auto}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.hero{border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#8b5cf6)}
+.hero.ok{background:linear-gradient(135deg,#10b981,#14b8a6)}.hero.warn{background:linear-gradient(135deg,#f59e0b,#f97316)}.hero.err{background:linear-gradient(135deg,#ef4444,#ec4899)}
+.status{display:flex;gap:14px;align-items:center}
+.status .ic{font-size:40px;width:72px;height:72px;border-radius:24px;display:grid;place-items:center;background:rgba(255,255,255,.25);flex:none}
+.status b{display:block;font-size:18px;font-weight:800}.status small{opacity:.92;font-size:14px}
+.status .rf{background:rgba(255,255,255,.25);border:0;border-radius:16px;width:50px;height:50px;font-size:24px;color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:18px;padding:14px 16px;font:inherit;font-weight:800;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;text-decoration:none;cursor:pointer;box-shadow:0 6px 16px rgba(124,58,237,.25)}
+.btn.sec{background:var(--bg);color:var(--tx);border:1px solid var(--bd);box-shadow:none}
+.btn.wa{background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 6px 16px rgba(34,197,94,.3)}
+.btn.red{background:linear-gradient(135deg,#ef4444,#e11d48)}.btn.sm{padding:8px 12px;font-size:14px;border-radius:12px;box-shadow:none}
+.btn.full{width:100%}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}
+.list .it{display:flex;align-items:center;gap:14px;padding:12px;margin:0 -6px 8px;border-radius:20px;cursor:pointer;background:var(--bg);transition:transform .15s}
+.list .it:active{transform:scale(.98)}
+.av{width:54px;height:54px;border-radius:18px;color:#fff;display:grid;place-items:center;font-weight:800;font-size:24px;flex:none;box-shadow:0 6px 14px rgba(0,0,0,.15)}
+.it .nm{font-weight:800;font-size:17px}.it .sub{color:var(--mu);font-size:13px}
+.badge{background:linear-gradient(135deg,#7c3aed,#c026d3);color:#fff;border-radius:14px;padding:6px 10px;font-weight:800;font-size:14px;white-space:nowrap;text-align:center;line-height:1.1}
+.badge small{display:block;font-size:11px;font-weight:600;opacity:.9}
+h2{font-size:18px;margin:2px 0 12px;font-weight:800;display:flex;align-items:center;gap:8px}
+h2 .e{font-size:26px}
+.mu{color:var(--mu);font-size:14px}
+label{display:block;font-weight:700;font-size:14px;margin:12px 0 5px}
+input,textarea,select{width:100%;padding:14px;border-radius:16px;border:2px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit;font-size:16px;outline:none}
+input:focus,textarea:focus{border-color:#a855f7}
+textarea{min-height:100px;resize:vertical}
+.fab{position:fixed;left:18px;bottom:calc(env(safe-area-inset-bottom) + 20px);width:68px;height:68px;border-radius:24px;font-size:36px;padding:0;background:linear-gradient(135deg,#f97316,#ec4899);box-shadow:0 10px 26px rgba(236,72,153,.45);z-index:6}
+.contact{display:flex;align-items:center;gap:10px;padding:12px;margin-bottom:8px;border-radius:20px;background:var(--bg)}
+.contact .pic{font-size:32px;width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:var(--card);flex:none}
+.contact .who{flex:1;min-width:0}.contact .who b{font-size:16px}.contact .who small{display:block;color:var(--mu);direction:ltr;text-align:right;font-weight:600}
+.rb{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;font-size:26px;text-decoration:none;flex:none;box-shadow:0 6px 14px rgba(0,0,0,.15)}
+.rb.call{background:linear-gradient(135deg,#3b82f6,#6366f1)}.rb.wa{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 8px;border-radius:22px;color:#fff;text-decoration:none;font-weight:800;font-size:15px;border:0;font-family:inherit;box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.tile .e{font-size:40px;line-height:1}
+.t1{background:linear-gradient(135deg,#3b82f6,#06b6d4)}.t2{background:linear-gradient(135deg,#64748b,#334155)}.t3{background:linear-gradient(135deg,#f59e0b,#f97316)}.t4{background:linear-gradient(135deg,#ec4899,#a855f7)}
+.ses{display:flex;align-items:center;gap:12px;padding:10px;margin-bottom:8px;border-radius:18px;background:var(--bg)}
+.ses .n{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#c026d3);color:#fff;display:grid;place-items:center;font-weight:800;flex:none}
+.ses .d{flex:1}.ses .d b{display:block}.ses .d small{color:var(--mu)}
+.del{background:transparent;border:0;font-size:22px;padding:6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chip{border:2px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:16px;padding:8px 14px;font:inherit;font-size:15px;font-weight:700}
+.chip.on{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-color:transparent}
+.tpl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.tpl button{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;border-radius:18px;padding:12px 4px;background:var(--bg);color:var(--tx);font:inherit;font-size:13px;font-weight:700}
+.tpl button span{font-size:30px}
+.toast{position:fixed;right:14px;left:14px;bottom:calc(env(safe-area-inset-bottom) + 100px);background:linear-gradient(135deg,#1e1b4b,#4c1d95);color:#fff;border-radius:20px;padding:14px 16px;display:flex;gap:10px;align-items:center;z-index:20;transform:translateY(220%);transition:.35s cubic-bezier(.2,1.4,.4,1);max-width:600px;margin:auto;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.3)}
+.toast.show{transform:none}.toast span{flex:1}.toast button{background:#fff;color:#4c1d95;border:0;border-radius:12px;padding:8px 14px;font:inherit;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.st{border-radius:22px;padding:14px 8px;text-align:center;color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.12)}
+.st .e{font-size:30px}.st .big{font-size:32px;font-weight:800;line-height:1.1}.st .l{font-size:13px;font-weight:700;opacity:.95}
+.s1{background:linear-gradient(135deg,#f97316,#f43f5e)}.s2{background:linear-gradient(135deg,#8b5cf6,#6366f1)}.s3{background:linear-gradient(135deg,#06b6d4,#10b981)}
+.empty{text-align:center;color:var(--mu);padding:24px 8px;font-weight:600}.empty .e{font-size:60px;display:block;margin-bottom:6px}
+.shero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:22px 16px}
+.shero .av{width:90px;height:90px;border-radius:30px;font-size:42px;border:4px solid rgba(255,255,255,.5)}
+.shero h3{margin:4px 0 0;font-size:22px;font-weight:800}.shero p{margin:0;opacity:.92}
+.mnav{display:flex;align-items:center;gap:8px}.mnav button{width:46px;height:46px;border-radius:16px;border:0;background:var(--bg);color:var(--tx);font-size:20px;font-weight:800}
+.mnav h2{flex:1;justify-content:center;margin:0}
+.modal{position:fixed;inset:0;background:rgba(30,27,75,.5);backdrop-filter:blur(4px);display:none;align-items:flex-end;z-index:30}
+.modal.show{display:flex}.sheet{background:var(--card);width:100%;max-width:640px;margin:auto auto 0;border-radius:30px 30px 0 0;padding:20px 16px calc(env(safe-area-inset-bottom) + 18px);animation:up .3s ease}
+@keyframes up{from{transform:translateY(100%)}}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <button id="backBtn" class="hidden" onclick="go('home')">→</button>
+  <div class="hd"><h1 id="ttl">حصصي</h1><small id="sub"></small></div>
+  <button id="setBtn" onclick="go('settings')">⚙️</button>
+</header>
+<main id="app"></main>
+<button class="btn fab" id="fab" onclick="openForm()">＋</button>
+<div class="toast" id="toast"><span id="toastTx"></span><button id="toastBtn" class="hidden"></button></div>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="sheet" id="sheet"></div></div>
+
+<script>
+// ================= Data =================
+const KEY='hessasy_v1';
+let S={students:[],sessions:[],settings:{radius:150,gapHours:3,cc:'965',teacher:''}};
+try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.students){S=d;S.settings=Object.assign({radius:150,gapHours:3,cc:'965',teacher:''},d.settings||{})}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('⚠️ تعذّر الحفظ')}}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=id=>document.getElementById(id);
+const stu=id=>S.students.find(s=>s.id===id);
+const AR_MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const fmtTime=ts=>{const d=new Date(ts);let h=d.getHours(),m=String(d.getMinutes()).padStart(2,'0');const p=h<12?'ص':'م';h=h%12||12;return `${h}:${m} ${p}`};
+const fmtDate=ts=>{const d=new Date(ts);return `${DAYS[d.getDay()]} ${d.getDate()} ${AR_MONTHS[d.getMonth()]}`};
+const monthKey=ts=>{const d=new Date(ts);return d.getFullYear()*12+d.getMonth()};
+const monthName=k=>`${AR_MONTHS[k%12]} ${Math.floor(k/12)}`;
+const sessOf=(id,mk)=>S.sessions.filter(x=>x.studentId===id&&(mk==null||monthKey(x.ts)===mk)).sort((a,b)=>b.ts-a.ts);
+const initials=n=>(n||'?').trim().charAt(0);
+
+function dist(a,b,c,d){const R=6371000,r=x=>x*Math.PI/180;const dl=r(c-a),dn=r(d-b);const h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+const fmtDist=m=>m<1000?`${Math.round(m)} متر`:`${(m/1000).toFixed(1)} كم`;
+
+function waNum(p){
+  let n=String(p||'').replace(/[^\d+]/g,'');if(!n)return '';
+  if(n.startsWith('+'))return n.slice(1);
+  if(n.startsWith('00'))return n.slice(2);
+  const cc=String(S.settings.cc||'').replace(/\D/g,'');
+  if(n.startsWith('0'))return cc+n.slice(1);
+  if(cc&&n.startsWith(cc)&&n.length>cc.length+7)return n;
+  return cc+n;
+}
+function parseLoc(t){
+  t=String(t||'');
+  let m=t.match(/@(-?\d+\.\d+),\s*(-?\d+\.\d+)/)||t.match(/[?&](?:q|ll|query|daddr|destination)=(-?\d+\.\d+),\s*(-?\d+\.\d+)/)||t.match(/(-?\d{1,2}\.\d{3,})\s*,\s*(-?\d{1,3}\.\d{3,})/);
+  return m?{lat:+m[1],lng:+m[2]}:null;
+}
+
+// ================= Location / auto check-in =================
+let loc={state:'idle',msg:'',sub:''},lastCheck=0,lastPos=null;
+function getPos(){return new Promise((res,rej)=>{
+  if(!navigator.geolocation)return rej({code:-1});
+  navigator.geolocation.getCurrentPosition(res,rej,{enableHighAccuracy:true,timeout:20000,maximumAge:0});
+})}
+async function checkIn(force){
+  if(!force&&Date.now()-lastCheck<60000)return;
+  lastCheck=Date.now();
+  loc={state:'busy',ic:'📡',msg:'جاري تحديد موقعك...',sub:''};renderStatus();
+  try{
+    const p=await getPos();
+    const {latitude:la,longitude:ln,accuracy:acc}=p.coords;lastPos={lat:la,lng:ln,acc};
+    const withLoc=S.students.filter(s=>s.lat!=null);
+    if(!withLoc.length){loc={state:'warn',ic:'🧭',msg:'تم تحديد موقعك',sub:'لسه مفيش طلاب ليهم لوكيشن متسجل'};return renderStatus()}
+    let best=null;for(const s of withLoc){const d=dist(la,ln,s.lat,s.lng);if(!best||d<best.d)best={s,d}}
+    const R=+S.settings.radius||150;
+    if(best.d<=R+Math.min(acc,100)){
+      const last=sessOf(best.s.id)[0];const gap=(+S.settings.gapHours||3)*3600000;
+      if(last&&Date.now()-last.ts<gap){
+        loc={state:'ok',ic:'✅',msg:`انت عند ${best.s.name}`,sub:`الحصة متسجلة بالفعل الساعة ${fmtTime(last.ts)}`};
+      }else{
+        const ses={id:uid(),studentId:best.s.id,ts:Date.now(),auto:true};S.sessions.push(ses);save();
+        loc={state:'ok',ic:'✅',msg:`اتسجلت حصة ${best.s.name}`,sub:`وقت الوصول ${fmtTime(ses.ts)} — حصة رقم ${sessOf(best.s.id,monthKey(ses.ts)).length} هذا الشهر`};
+        if(navigator.vibrate)navigator.vibrate(80);
+        toast(`✅ اتسجلت حصة ${best.s.name} ${fmtTime(ses.ts)}`,'تراجع',()=>{S.sessions=S.sessions.filter(x=>x.id!==ses.id);save();loc={state:'warn',ic:'↩️',msg:'تم إلغاء التسجيل',sub:''};render()});
+      }
+    }else{
+      loc={state:'warn',ic:'📍',msg:'مش عند أي طالب دلوقتي',sub:`أقرب طالب: ${best.s.name} على بُعد ${fmtDist(best.d)}`+(acc>200?` (دقة الموقع ضعيفة ±${Math.round(acc)}م)`:'')};
+    }
+  }catch(e){
+    loc={state:'err',ic:'⚠️',msg:e.code===1?'إذن الموقع مرفوض':'تعذّر تحديد الموقع',sub:e.code===1?'من الإعدادات ← الخصوصية ← خدمات الموقع ← Safari ← "أثناء الاستخدام"':'تأكد إن خدمات الموقع شغالة وجرب تاني'};
+  }
+  render();
+}
+function renderStatus(){const el=$('status');if(el)el.outerHTML=statusHTML()}
+const GR=[['#f97316','#f43f5e'],['#8b5cf6','#6366f1'],['#06b6d4','#3b82f6'],['#10b981','#14b8a6'],['#ec4899','#a855f7'],['#f59e0b','#ef4444'],['#0ea5e9','#22c55e']];
+function avStyle(id){let h=0;for(const c of String(id))h=(h*31+c.charCodeAt(0))>>>0;const g=GR[h%GR.length];return `background:linear-gradient(135deg,${g[0]},${g[1]})`}
+function greet(){const h=new Date().getHours();const t=h<12?'صباح الخير':'مساء الخير';return `${t}${S.settings.teacher?' يا '+S.settings.teacher:''} 👋`}
+function statusHTML(){
+  const cls=loc.state==='ok'?'ok':loc.state==='warn'?'warn':loc.state==='err'?'err':'';
+  return `<div class="card hero ${cls}" id="status"><div class="status"><div class="ic">${loc.ic||'📍'}</div><div style="flex:1"><b>${esc(loc.msg||'اضغط لتحديد موقعك')}</b><small>${esc(loc.sub||'')}</small></div><button class="rf" onclick="checkIn(true)">🔄</button></div></div>`;
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkIn(false)});
+
+// ================= Views =================
+let view='home',cur=null,curMonth=monthKey(Date.now()),waTo='mother',waTpl=null;
+function go(v,id){view=v;if(id!==undefined)cur=id;if(v==='student')curMonth=monthKey(Date.now());render();window.scrollTo(0,0)}
+function render(){
+  $('backBtn').classList.toggle('hidden',view==='home');
+  $('setBtn').classList.toggle('hidden',view!=='home');
+  $('fab').classList.toggle('hidden',view!=='home');
+  const A=$('app');
+  $('sub').textContent='';
+  if(view==='home'){A.innerHTML=homeV();$('ttl').textContent='حصصي 📚';$('sub').textContent=greet()+' · '+fmtDate(Date.now())}
+  else if(view==='student'){const s=stu(cur);if(!s)return go('home');$('ttl').textContent='ملف الطالب';A.innerHTML=studentV(s)}
+  else if(view==='settings'){$('ttl').textContent='الإعدادات ⚙️';A.innerHTML=settingsV()}
+}
+function homeV(){
+  const mk=monthKey(Date.now()),today=new Date().toDateString();
+  const todays=S.sessions.filter(x=>new Date(x.ts).toDateString()===today).sort((a,b)=>a.ts-b.ts);
+  const monthTotal=S.sessions.filter(x=>monthKey(x.ts)===mk).length;
+  let h=statusHTML();
+  h+=`<div class="stats"><div class="st s1"><div class="e">🔥</div><div class="big">${todays.length}</div><div class="l">النهارده</div></div><div class="st s2"><div class="e">📅</div><div class="big">${monthTotal}</div><div class="l">${AR_MONTHS[mk%12]}</div></div><div class="st s3"><div class="e">🎓</div><div class="big">${S.students.length}</div><div class="l">طالب</div></div></div>`;
+  if(todays.length){h+=`<div class="card"><h2><span class="e">⏱️</span>حصص النهارده</h2>`+todays.map((x,i)=>{const s=stu(x.studentId);return `<div class="ses"><div class="n" style="${avStyle(x.studentId)}">${esc(initials(s?s.name:'?'))}</div><div class="d"><b>${esc(s?s.name:'محذوف')}</b><small>وصلت ${fmtTime(x.ts)}</small></div><span style="font-size:24px">${x.auto?'📍':'✍️'}</span></div>`}).join('')+`</div>`}
+  h+=`<div class="card"><h2><span class="e">👨‍🎓</span>الطلاب</h2>`;
+  if(!S.students.length)h+=`<div class="empty"><span class="e">🎒</span>لسه مفيش طلاب<br>اضغط ＋ تحت وضيف أول طالب</div>`;
+  else{
+    let list=[...S.students];
+    if(lastPos)list.sort((a,b)=>(a.lat==null?1e9:dist(lastPos.lat,lastPos.lng,a.lat,a.lng))-(b.lat==null?1e9:dist(lastPos.lat,lastPos.lng,b.lat,b.lng)));
+    else list.sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+    h+=`<div class="list">`+list.map(s=>{const n=sessOf(s.id,mk).length;const d=lastPos&&s.lat!=null?'🚗 '+fmtDist(dist(lastPos.lat,lastPos.lng,s.lat,s.lng)):'';
+      return `<div class="it" onclick="go('student','${s.id}')"><div class="av" style="${avStyle(s.id)}">${esc(initials(s.name))}</div><div style="flex:1;min-width:0"><div class="nm">${esc(s.name)}</div><div class="sub">${[s.address?'🏠 '+esc(s.address):'',s.lat==null?'⚠️ بدون لوكيشن':d].filter(Boolean).join(' · ')}</div></div><span class="badge">${n}<small>حصة</small></span></div>`}).join('')+`</div>`;
+  }
+  return h+`</div>`;
+}
+function contactRow(label,num,icon){
+  if(!num)return '';const w=waNum(num);
+  return `<div class="contact"><div class="pic">${icon}</div><div class="who"><b>${label}</b><small>${esc(num)}</small></div>
+  <a class="rb call" href="tel:${esc(String(num).replace(/[^\d+]/g,''))}">📞</a>
+  <a class="rb wa" href="https://wa.me/${w}" target="_blank" rel="noopener">💬</a></div>`;
+}
+function studentV(s){
+  const mk=curMonth,ms=sessOf(s.id,mk),all=sessOf(s.id);
+  let h=`<div class="card hero shero" style="${avStyle(s.id)}"><div class="av" style="background:rgba(255,255,255,.25)">${esc(initials(s.name))}</div><h3>${esc(s.name)}</h3><p>🏠 ${esc(s.address||'بدون عنوان')}</p>${s.notes?`<p>📝 ${esc(s.notes)}</p>`:''}<div class="row" style="width:100%;margin-top:8px"><div style="background:rgba(255,255,255,.22);border-radius:18px;padding:8px"><b style="font-size:26px">${sessOf(s.id,monthKey(Date.now())).length}</b><div style="font-size:13px">حصص الشهر</div></div><div style="background:rgba(255,255,255,.22);border-radius:18px;padding:8px"><b style="font-size:26px">${all.length}</b><div style="font-size:13px">الإجمالي</div></div></div></div>`;
+  // location
+  h+=`<div class="card"><h2><span class="e">🗺️</span>اللوكيشن</h2>`;
+  if(s.lat==null)h+=`<div class="mu" style="margin-bottom:10px">لسه مفيش لوكيشن. لما تكون عند الطالب اضغط "احفظ موقعي"</div>`;
+  h+=`<div class="tiles">`+(s.lat!=null?`<a class="tile t1" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}"><span class="e">🧭</span>Google Maps</a><a class="tile t2" target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=${s.lat},${s.lng}"><span class="e">🍎</span>خرائط Apple</a>`:'')+
+  `<button class="tile t3" onclick="setHere('${s.id}')"><span class="e">📌</span>${s.lat!=null?'حدّث لموقعي':'احفظ موقعي'}</button><button class="tile t4" onclick="openForm('${s.id}')"><span class="e">✏️</span>تعديل البيانات</button></div></div>`;
+  // contacts
+  const c=contactRow('الطالب',s.phone,'🎓')+contactRow('الوالدة',s.mother,'👩')+contactRow('الوالد',s.father,'👨');
+  h+=`<div class="card"><h2><span class="e">📞</span>التواصل</h2>${c||'<div class="mu">مفيش أرقام متسجلة</div>'}</div>`;
+  // whatsapp composer
+  const nums={mother:s.mother,father:s.father,student:s.phone};
+  if(!nums[waTo])waTo=['mother','father','student'].find(k=>nums[k])||'mother';
+  if(c){
+    h+=`<div class="card"><h2><span class="e">💬</span>رسالة واتساب</h2><div class="chips">`+
+    [['mother','الوالدة'],['father','الوالد'],['student','الطالب']].filter(([k])=>nums[k]).map(([k,l])=>`<button class="chip ${waTo===k?'on':''}" onclick="waTo='${k}';render()">${l}</button>`).join('')+`</div>
+    <div class="tpl">${[['👋','وصلت'],['⏰','تذكير'],['📊','تقرير الشهر'],['🙏','اعتذار']].map(([e,t])=>`<button onclick="fillTpl('${s.id}','${t}')"><span>${e}</span>${t}</button>`).join('')}</div>
+    <textarea id="waTx" placeholder="اكتب رسالتك...">${esc(waTpl||'')}</textarea>
+    <button class="btn wa full" style="margin-top:10px;font-size:18px" onclick="sendWa('${s.id}')">💬 إرسال على واتساب</button></div>`;
+  }
+  // sessions
+  h+=`<div class="card"><h2><span class="e">📅</span>الحصص</h2><div class="mnav"><button onclick="curMonth--;render()">→</button><h2>${monthName(mk)} · <span style="color:#a855f7">${ms.length}</span></h2><button onclick="curMonth++;render()">←</button></div><div style="height:12px"></div>`;
+  h+=ms.length?ms.map((x,i)=>`<div class="ses"><div class="n">${ms.length-i}</div><div class="d"><b>${fmtDate(x.ts)}</b><small>${x.auto?'📍 تلقائي':'✍️ يدوي'} · وصلت ${fmtTime(x.ts)}</small></div><button class="del" onclick="delSes('${x.id}')">🗑️</button></div>`).join(''):`<div class="empty"><span class="e">🗓️</span>مفيش حصص في الشهر ده</div>`;
+  h+=`<button class="btn full" style="margin-top:6px" onclick="manualSes('${s.id}')">➕ إضافة حصة يدوي</button></div>`;
+  h+=`<button class="btn red full" onclick="delStu('${s.id}')">🗑️ حذف الطالب</button>`;
+  waTpl=null;return h;
+}
+function settingsV(){
+  const st=S.settings;
+  return `<div class="card"><h2><span class="e">📡</span>التسجيل التلقائي</h2>
+  <label>المسافة اللي تعتبر فيها "عند الطالب" (متر)</label><input id="sR" type="number" inputmode="numeric" value="${st.radius}">
+  <label>متسجلش حصة تانية لنفس الطالب قبل (ساعات)</label><input id="sG" type="number" inputmode="numeric" value="${st.gapHours}">
+  <label>كود الدولة لأرقام الواتساب</label><input id="sC" inputmode="numeric" value="${esc(st.cc)}" placeholder="965 الكويت / 20 مصر">
+  <label>اسمك (يظهر في الرسائل)</label><input id="sT" value="${esc(st.teacher)}" placeholder="مستر ...">
+  <button class="btn full" style="margin-top:12px" onclick="saveSet()">حفظ</button></div>
+  <div class="card"><h2><span class="e">💾</span>نسخة احتياطية</h2><div class="mu">البيانات محفوظة على الموبايل ده بس. خد نسخة احتياطية كل فترة (وابعتها لنفسك على واتساب مثلًا).</div>
+  <div class="row" style="margin-top:10px"><button class="btn" onclick="exportData()">⬆️ تصدير</button><label class="btn sec" style="margin:0">⬇️ استيراد<input type="file" accept=".json,application/json" class="hidden" onchange="importData(this)"></label></div></div>
+  <div class="card mu">${S.students.length} طالب · ${S.sessions.length} حصة متسجلة</div>`;
+}
+
+// ================= Actions =================
+function toast(t,btn,fn){$('toastTx').textContent=t;const b=$('toastBtn');if(btn){b.textContent=btn;b.classList.remove('hidden');b.onclick=()=>{fn();hideToast()}}else b.classList.add('hidden');$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(hideToast,btn?7000:3000)}
+function hideToast(){$('toast').classList.remove('show')}
+function closeModal(){$('modal').classList.remove('show')}
+function openForm(id){
+  const s=id?stu(id):{};
+  $('sheet').innerHTML=`<h2>${id?'تعديل بيانات الطالب':'طالب جديد'}</h2>
+  <div style="max-height:70vh;overflow:auto">
+  <label>الاسم *</label><input id="fN" value="${esc(s.name||'')}">
+  <label>العنوان</label><input id="fA" value="${esc(s.address||'')}" placeholder="المنطقة، القطعة، الشارع، المنزل">
+  <label>رقم الطالب</label><input id="fP" type="tel" value="${esc(s.phone||'')}">
+  <label>رقم الوالدة</label><input id="fM" type="tel" value="${esc(s.mother||'')}">
+  <label>رقم الوالد</label><input id="fF" type="tel" value="${esc(s.father||'')}">
+  <label>اللوكيشن</label><input id="fL" value="${s.lat!=null?s.lat+', '+s.lng:''}" placeholder="الصق رابط خرائط أو إحداثيات">
+  <button class="btn sec full" style="margin-top:6px" onclick="fillHere()">📌 استخدم موقعي الحالي</button>
+  <label>ملاحظات</label><textarea id="fO" placeholder="المادة، الصف، مواعيد ثابتة...">${esc(s.notes||'')}</textarea>
+  </div><div class="row" style="margin-top:12px"><button class="btn" onclick="saveStu('${id||''}')">حفظ</button><button class="btn sec" onclick="closeModal()">إلغاء</button></div>`;
+  $('modal').classList.add('show');
+}
+async function fillHere(){
+  $('fL').value='جاري تحديد الموقع...';
+  try{const p=await getPos();$('fL').value=p.coords.latitude.toFixed(6)+', '+p.coords.longitude.toFixed(6);toast(`✅ تم (دقة ±${Math.round(p.coords.accuracy)}م)`)}
+  catch(e){$('fL').value='';toast('⚠️ تعذّر تحديد الموقع')}
+}
+function saveStu(id){
+  const name=$('fN').value.trim();if(!name)return toast('اكتب اسم الطالب');
+  const lt=$('fL').value.trim(),L=parseLoc(lt);
+  if(lt&&!L)return toast('⚠️ اللوكيشن مش مفهوم — الصق إحداثيات أو رابط فيه أرقام');
+  const d={name,address:$('fA').value.trim(),phone:$('fP').value.trim(),mother:$('fM').value.trim(),father:$('fF').value.trim(),notes:$('fO').value.trim(),lat:L?L.lat:null,lng:L?L.lng:null};
+  if(id)Object.assign(stu(id),d);else{const n={id:uid(),created:Date.now(),...d};S.students.push(n);cur=n.id}
+  save();closeModal();go('student',id||cur);
+}
+async function setHere(id){
+  toast('📡 جاري تحديد موقعك...');
+  try{const p=await getPos();const s=stu(id);s.lat=+p.coords.latitude.toFixed(6);s.lng=+p.coords.longitude.toFixed(6);save();render();toast(`✅ اتحفظ اللوكيشن (دقة ±${Math.round(p.coords.accuracy)}م)`)}
+  catch(e){toast(e.code===1?'⚠️ إذن الموقع مرفوض':'⚠️ تعذّر تحديد الموقع')}
+}
+function ask(msg,ok,okTx='حذف'){
+  $('sheet').innerHTML=`<h2>${msg}</h2><div class="row" style="margin-top:14px"><button class="btn red" id="aOk">${okTx}</button><button class="btn sec" onclick="closeModal()">إلغاء</button></div>`;
+  $('aOk').onclick=()=>{closeModal();ok()};$('modal').classList.add('show');
+}
+function delSes(id){ask('حذف الحصة دي؟',()=>{S.sessions=S.sessions.filter(x=>x.id!==id);save();render()})}
+function delStu(id){ask(`حذف ${esc(stu(id).name)} وكل حصصه؟`,()=>{S.students=S.students.filter(x=>x.id!==id);S.sessions=S.sessions.filter(x=>x.studentId!==id);save();go('home')})}
+function manualSes(id){
+  const d=new Date(),loc2=new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+  $('sheet').innerHTML=`<h2>إضافة حصة يدوي</h2><label>تاريخ ووقت الوصول</label><input id="mD" type="datetime-local" value="${loc2}"><div class="row" style="margin-top:12px"><button class="btn" id="mOk">إضافة</button><button class="btn sec" onclick="closeModal()">إلغاء</button></div>`;
+  $('mOk').onclick=()=>{const t=new Date($('mD').value).getTime();if(!t)return;S.sessions.push({id:uid(),studentId:id,ts:t,auto:false});save();curMonth=monthKey(t);closeModal();render()};
+  $('modal').classList.add('show');
+}
+function fillTpl(id,t){
+  const s=stu(id),T=S.settings.teacher?`\n${S.settings.teacher}`:'';
+  const rel=waTo==='student'?`عزيزي ${s.name}`:(waTo==='mother'?'السلام عليكم يا أم ':'السلام عليكم يا أبو ')+(waTo==='student'?'':s.name);
+  let m='';
+  if(t==='وصلت')m=`${rel}\nأنا وصلت للحصة 👋${T}`;
+  else if(t==='تذكير')m=`${rel}\nتذكير بحصة اليوم إن شاء الله 📚${T}`;
+  else if(t==='اعتذار')m=`${rel}\nبعتذر عن حصة اليوم، وهنعوضها في أقرب وقت إن شاء الله 🙏${T}`;
+  else{const ms=sessOf(id,curMonth).reverse();m=`${rel}\nتقرير حصص ${s.name} لشهر ${monthName(curMonth)}:\nعدد الحصص: ${ms.length}\n`+ms.map((x,i)=>`${i+1}- ${fmtDate(x.ts)} - ${fmtTime(x.ts)}`).join('\n')+T}
+  $('waTx').value=m;
+}
+function sendWa(id){
+  const s=stu(id),n=waNum({mother:s.mother,father:s.father,student:s.phone}[waTo]),t=$('waTx').value.trim();
+  if(!n)return toast('مفيش رقم');if(!t)return toast('اكتب الرسالة الأول');
+  location.href=`https://wa.me/${n}?text=${encodeURIComponent(t)}`;
+}
+function saveSet(){S.settings={radius:Math.max(20,+$('sR').value||150),gapHours:Math.max(0.5,+$('sG').value||3),cc:$('sC').value.replace(/\D/g,''),teacher:$('sT').value.trim()};save();toast('✅ اتحفظ');go('home')}
+async function exportData(){
+  const name=`hessasy-backup-${new Date().toISOString().slice(0,10)}.json`;
+  const file=new File([JSON.stringify(S,null,1)],name,{type:'application/json'});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'نسخة احتياطية - حصصي'});return}}catch(e){if(e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();
+}
+function importData(inp){
+  const f=inp.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.students)throw 0;ask(`استيراد ${d.students.length} طالب و ${d.sessions.length} حصة؟ (هيستبدل البيانات الحالية)`,()=>{S=d;save();toast('✅ تم الاستيراد');go('home')},'استيراد')}catch(e){toast('⚠️ الملف مش صالح')}};
+  r.readAsText(f);
+}
+
+render();checkIn(true);
+</script>
+</body>
+</html>
