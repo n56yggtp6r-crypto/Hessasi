@@ -67,10 +67,10 @@ textarea{min-height:100px;resize:vertical}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .chip{border:2px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:16px;padding:8px 14px;font:inherit;font-size:15px;font-weight:700}
 .chip.on{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-color:transparent}
-.tpl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.tpl{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}
 .tpl button{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;border-radius:18px;padding:12px 4px;background:var(--bg);color:var(--tx);font:inherit;font-size:13px;font-weight:700}
 .tpl button span{font-size:30px}
-.toast{position:fixed;right:14px;left:14px;bottom:calc(env(safe-area-inset-bottom) + 100px);background:linear-gradient(135deg,#1e1b4b,#4c1d95);color:#fff;border-radius:20px;padding:14px 16px;display:flex;gap:10px;align-items:center;z-index:20;transform:translateY(calc(100% + 260px));opacity:0;visibility:hidden;pointer-events:none;transition:transform .35s cubic-bezier(.2,1.4,.4,1),opacity .25s,visibility .35s;max-width:600px;margin:auto;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.3)}
+.toast{position:fixed;right:14px;left:14px;bottom:calc(env(safe-area-inset-bottom) + 100px);background:linear-gradient(135deg,#1e1b4b,#4c1d95);color:#fff;border-radius:20px;padding:14px 16px;display:flex;gap:10px;align-items:center;z-index:50;transform:translateY(calc(100% + 260px));opacity:0;visibility:hidden;pointer-events:none;transition:transform .35s cubic-bezier(.2,1.4,.4,1),opacity .25s,visibility .35s;max-width:600px;margin:auto;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.3)}
 .toast.show{transform:none;opacity:1;visibility:visible;pointer-events:auto}.toast span{flex:1}.toast button{background:#fff;color:#4c1d95;border:0;border-radius:12px;padding:8px 14px;font:inherit;font-weight:800}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
 .st{border-radius:22px;padding:14px 8px;text-align:center;color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.12)}
@@ -102,8 +102,8 @@ textarea{min-height:100px;resize:vertical}
 <script>
 // ================= Data =================
 const KEY='hessasy_v1';
-let S={students:[],sessions:[],settings:{radius:150,gapHours:3,cc:'965',teacher:''}};
-try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.students){S=d;S.settings=Object.assign({radius:150,gapHours:3,cc:'965',teacher:''},d.settings||{})}}catch(e){}
+let S={students:[],sessions:[],settings:{radius:150,gapHours:3,cc:'965',teacher:'',cur:'د.ك'}};
+try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.students){S=d;S.settings=Object.assign({radius:150,gapHours:3,cc:'965',teacher:'',cur:'د.ك'},d.settings||{})}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('⚠️ تعذّر الحفظ')}}
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -132,10 +132,13 @@ function waNum(p){
 }
 function parseLoc(t){
   t=String(t||'');
-  let m=t.match(/@(-?\d+\.\d+),\s*(-?\d+\.\d+)/)||t.match(/[?&](?:q|ll|query|daddr|destination)=(-?\d+\.\d+),\s*(-?\d+\.\d+)/)||t.match(/(-?\d{1,2}\.\d{3,})\s*,\s*(-?\d{1,3}\.\d{3,})/);
+  let m=t.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/)||t.match(/@(-?\d+\.\d+),\s*(-?\d+\.\d+)/)||t.match(/[?&](?:q|ll|query|daddr|destination|sll|coordinate)=(-?\d+\.\d+)(?:,|%2C)\s*(-?\d+\.\d+)/i)||t.match(/[?&](?:q|ll|query|daddr|destination)=(-?\d+\.\d+),\s*(-?\d+\.\d+)/)||t.match(/(-?\d{1,2}\.\d{3,})\s*,\s*(-?\d{1,3}\.\d{3,})/);
   return m?{lat:+m[1],lng:+m[2]}:null;
 }
 
+const bal=s=>(s.ledger||[]).reduce((a,x)=>a+(x.type==='due'?x.amt:-x.amt),0);
+const money=n=>`${(+n).toLocaleString('en-US',{maximumFractionDigits:3})} ${S.settings.cur||''}`.trim();
+const urlOf=t=>{const m=String(t||'').match(/https?:\/\/\S+/);return m?m[0]:''};
 // ================= Location / auto check-in =================
 let loc={state:'idle',msg:'',sub:''},lastCheck=0,lastPos=null;
 function getPos(){return new Promise((res,rej)=>{
@@ -182,7 +185,7 @@ function statusHTML(){
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkIn(false)});
 
 // ================= Views =================
-let view='home',cur=null,curMonth=monthKey(Date.now()),waTo='mother',waTpl=null;
+let view='home',repMonth=monthKey(Date.now()),repAll=false,repStu='',cur=null,curMonth=monthKey(Date.now()),waTo='mother',waTpl=null;
 function go(v,id){view=v;if(id!==undefined)cur=id;if(v==='student')curMonth=monthKey(Date.now());render();window.scrollTo(0,0)}
 function render(){
   $('backBtn').classList.toggle('hidden',view==='home');
@@ -193,6 +196,7 @@ function render(){
   if(view==='home'){A.innerHTML=homeV();$('ttl').textContent='حصصي 📚';$('sub').textContent=greet()+' · '+fmtDate(Date.now())}
   else if(view==='student'){const s=stu(cur);if(!s)return go('home');$('ttl').textContent='ملف الطالب';A.innerHTML=studentV(s)}
   else if(view==='settings'){$('ttl').textContent='الإعدادات ⚙️';A.innerHTML=settingsV()}
+  else if(view==='report'){$('ttl').textContent='التقارير 📊';A.innerHTML=reportV()}
 }
 function homeV(){
   const mk=monthKey(Date.now()),today=new Date().toDateString();
@@ -200,6 +204,7 @@ function homeV(){
   const monthTotal=S.sessions.filter(x=>monthKey(x.ts)===mk).length;
   let h=statusHTML();
   h+=`<div class="stats"><div class="st s1"><div class="e">🔥</div><div class="big">${todays.length}</div><div class="l">النهارده</div></div><div class="st s2"><div class="e">📅</div><div class="big">${monthTotal}</div><div class="l">${AR_MONTHS[mk%12]}</div></div><div class="st s3"><div class="e">🎓</div><div class="big">${S.students.length}</div><div class="l">طالب</div></div></div>`;
+  h+=`<button class="tile t4" style="width:100%;flex-direction:row;gap:12px;margin-bottom:14px;font-size:18px" onclick="go('report')"><span class="e" style="font-size:34px">📊</span>التقارير وإرسالها واتساب</button>`;
   if(todays.length){h+=`<div class="card"><h2><span class="e">⏱️</span>حصص النهارده</h2>`+todays.map((x,i)=>{const s=stu(x.studentId);return `<div class="ses"><div class="n" style="${avStyle(x.studentId)}">${esc(initials(s?s.name:'?'))}</div><div class="d"><b>${esc(s?s.name:'محذوف')}</b><small>وصلت ${fmtTime(x.ts)}</small></div><span style="font-size:24px">${x.auto?'📍':'✍️'}</span></div>`}).join('')+`</div>`}
   h+=`<div class="card"><h2><span class="e">👨‍🎓</span>الطلاب</h2>`;
   if(!S.students.length)h+=`<div class="empty"><span class="e">🎒</span>لسه مفيش طلاب<br>اضغط ＋ تحت وضيف أول طالب</div>`;
@@ -208,7 +213,7 @@ function homeV(){
     if(lastPos)list.sort((a,b)=>(a.lat==null?1e9:dist(lastPos.lat,lastPos.lng,a.lat,a.lng))-(b.lat==null?1e9:dist(lastPos.lat,lastPos.lng,b.lat,b.lng)));
     else list.sort((a,b)=>a.name.localeCompare(b.name,'ar'));
     h+=`<div class="list">`+list.map(s=>{const n=sessOf(s.id,mk).length;const d=lastPos&&s.lat!=null?'🚗 '+fmtDist(dist(lastPos.lat,lastPos.lng,s.lat,s.lng)):'';
-      return `<div class="it" onclick="go('student','${s.id}')"><div class="av" style="${avStyle(s.id)}">${esc(initials(s.name))}</div><div style="flex:1;min-width:0"><div class="nm">${esc(s.name)}</div><div class="sub">${[s.address?'🏠 '+esc(s.address):'',s.lat==null?'⚠️ بدون لوكيشن':d].filter(Boolean).join(' · ')}</div></div><span class="badge">${n}<small>حصة</small></span></div>`}).join('')+`</div>`;
+      return `<div class="it" onclick="go('student','${s.id}')"><div class="av" style="${avStyle(s.id)}">${esc(initials(s.name))}</div><div style="flex:1;min-width:0"><div class="nm">${esc(s.name)}</div><div class="sub">${[s.address?'🏠 '+esc(s.address):'',s.lat==null?'⚠️ بدون لوكيشن':d,bal(s)>0?'💰 '+money(bal(s)):''].filter(Boolean).join(' · ')}</div></div><span class="badge">${n}<small>حصة</small></span></div>`}).join('')+`</div>`;
   }
   return h+`</div>`;
 }
@@ -223,11 +228,15 @@ function studentV(s){
   let h=`<div class="card hero shero" style="${avStyle(s.id)}"><div class="av" style="background:rgba(255,255,255,.25)">${esc(initials(s.name))}</div><h3>${esc(s.name)}</h3><p>🏠 ${esc(s.address||'بدون عنوان')}</p>${s.notes?`<p>📝 ${esc(s.notes)}</p>`:''}<div class="row" style="width:100%;margin-top:8px"><div style="background:rgba(255,255,255,.22);border-radius:18px;padding:8px"><b style="font-size:26px">${sessOf(s.id,monthKey(Date.now())).length}</b><div style="font-size:13px">حصص الشهر</div></div><div style="background:rgba(255,255,255,.22);border-radius:18px;padding:8px"><b style="font-size:26px">${all.length}</b><div style="font-size:13px">الإجمالي</div></div></div></div>`;
   // location
   h+=`<div class="card"><h2><span class="e">🗺️</span>اللوكيشن</h2>`;
-  if(s.lat==null)h+=`<div class="mu" style="margin-bottom:10px">لسه مفيش لوكيشن. لما تكون عند الطالب اضغط "احفظ موقعي"</div>`;
-  h+=`<div class="tiles">`+(s.lat!=null?`<a class="tile t1" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}"><span class="e">🧭</span>Google Maps</a><a class="tile t2" target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=${s.lat},${s.lng}"><span class="e">🍎</span>خرائط Apple</a>`:'')+
+  if(s.lat==null)h+=`<div class="mu" style="margin-bottom:10px">${s.mapUrl?'🔗 فيه رابط خريطة، بس للتسجيل التلقائي':'لسه مفيش لوكيشن.'} لما تكون عند الطالب اضغط "احفظ موقعي"</div>`;
+  h+=`<div class="tiles">`+(s.lat!=null?`<a class="tile t1" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}"><span class="e">🧭</span>Google Maps</a><a class="tile t2" target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=${s.lat},${s.lng}"><span class="e">🍎</span>خرائط Apple</a>`:s.mapUrl?`<a class="tile t1" style="grid-column:1/-1" target="_blank" rel="noopener" href="${esc(s.mapUrl)}"><span class="e">🧭</span>افتح رابط الخريطة</a>`:'')+
   `<button class="tile t3" onclick="setHere('${s.id}')"><span class="e">📌</span>${s.lat!=null?'حدّث لموقعي':'احفظ موقعي'}</button><button class="tile t4" onclick="openForm('${s.id}')"><span class="e">✏️</span>تعديل البيانات</button></div></div>`;
   // contacts
   const c=contactRow('الطالب',s.phone,'🎓')+contactRow('الوالدة',s.mother,'👩')+contactRow('الوالد',s.father,'👨');
+  const B=bal(s),L2=(s.ledger||[]).slice().sort((a,b)=>b.ts-a.ts);
+  h+=`<div class="card"><h2><span class="e">💰</span>الحساب</h2><div class="st ${B>0?'s1':'s3'}" style="margin-bottom:12px"><div class="l">${B>0?'المتبقي على الطالب':B<0?'رصيد مقدّم للطالب':'الحساب خالص'}</div><div class="big">${money(Math.abs(B))}</div></div>
+  <div class="tiles"><button class="tile t3" onclick="moneyForm('${s.id}','due')"><span class="e">➕</span>مبلغ مستحق</button><button class="tile" style="background:linear-gradient(135deg,#10b981,#14b8a6)" onclick="moneyForm('${s.id}','pay')"><span class="e">💵</span>استلمت دفعة</button></div>`+
+  (L2.length?`<div style="height:12px"></div>`+L2.slice(0,15).map(x=>`<div class="ses"><div class="n" style="background:${x.type==='due'?'linear-gradient(135deg,#f97316,#f43f5e)':'linear-gradient(135deg,#10b981,#14b8a6)'}">${x.type==='due'?'➕':'✔'}</div><div class="d"><b>${x.type==='due'?'مستحق':'دفعة'} ${money(x.amt)}</b><small>${fmtDate(x.ts)}${x.note?' · '+esc(x.note):''}</small></div><button class="del" onclick="delMoney('${s.id}','${x.id}')">🗑️</button></div>`).join(''):'')+`</div>`;
   h+=`<div class="card"><h2><span class="e">📞</span>التواصل</h2>${c||'<div class="mu">مفيش أرقام متسجلة</div>'}</div>`;
   // whatsapp composer
   const nums={mother:s.mother,father:s.father,student:s.phone};
@@ -235,7 +244,7 @@ function studentV(s){
   if(c){
     h+=`<div class="card"><h2><span class="e">💬</span>رسالة واتساب</h2><div class="chips">`+
     [['mother','الوالدة'],['father','الوالد'],['student','الطالب']].filter(([k])=>nums[k]).map(([k,l])=>`<button class="chip ${waTo===k?'on':''}" onclick="waTo='${k}';render()">${l}</button>`).join('')+`</div>
-    <div class="tpl">${[['👋','وصلت'],['⏰','تذكير'],['📊','تقرير الشهر'],['🙏','اعتذار']].map(([e,t])=>`<button onclick="fillTpl('${s.id}','${t}')"><span>${e}</span>${t}</button>`).join('')}</div>
+    <div class="tpl">${[['👋','وصلت'],['⏰','تذكير'],['📊','تقرير الشهر'],['💰','المتبقي'],['🙏','اعتذار']].map(([e,t])=>`<button onclick="fillTpl('${s.id}','${t}')"><span>${e}</span>${t}</button>`).join('')}</div>
     <textarea id="waTx" placeholder="اكتب رسالتك...">${esc(waTpl||'')}</textarea>
     <button class="btn wa full" style="margin-top:10px;font-size:18px" onclick="sendWa('${s.id}')">💬 إرسال على واتساب</button></div>`;
   }
@@ -252,6 +261,7 @@ function settingsV(){
   <label>المسافة اللي تعتبر فيها "عند الطالب" (متر)</label><input id="sR" type="number" inputmode="numeric" value="${st.radius}">
   <label>متسجلش حصة تانية لنفس الطالب قبل (ساعات)</label><input id="sG" type="number" inputmode="numeric" value="${st.gapHours}">
   <label>كود الدولة لأرقام الواتساب</label><input id="sC" inputmode="numeric" value="${esc(st.cc)}" placeholder="965 الكويت / 20 مصر">
+  <label>العملة</label><input id="sU" value="${esc(st.cur||'')}" placeholder="د.ك">
   <label>اسمك (يظهر في الرسائل)</label><input id="sT" value="${esc(st.teacher)}" placeholder="مستر ...">
   <button class="btn full" style="margin-top:12px" onclick="saveSet()">حفظ</button></div>
   <div class="card"><h2><span class="e">💾</span>نسخة احتياطية</h2><div class="mu">البيانات محفوظة على الموبايل ده بس. خد نسخة احتياطية كل فترة (وابعتها لنفسك على واتساب مثلًا).</div>
@@ -259,7 +269,58 @@ function settingsV(){
   <div class="card mu">${S.students.length} طالب · ${S.sessions.length} حصة متسجلة</div>`;
 }
 
+
+// ================= Reports =================
+function repData(){
+  const list=S.students.filter(s=>!repStu||s.id===repStu).sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+  return list.map(s=>({s,ses:S.sessions.filter(x=>x.studentId===s.id&&(repAll||monthKey(x.ts)===repMonth)).sort((a,b)=>a.ts-b.ts)})).filter(r=>r.ses.length||repStu);
+}
+function repText(){
+  const D=repData(),tot=D.reduce((a,r)=>a+r.ses.length,0);
+  let t=`📊 تقرير الحصص — ${repAll?'كل الشهور':monthName(repMonth)}\n`;
+  if(!repStu){t+=`إجمالي الحصص: ${tot} · عدد الطلاب: ${D.length}\n`;const ow=D.reduce((a,r)=>a+Math.max(0,bal(r.s)),0);if(ow)t+=`💰 إجمالي المتبقي: ${money(ow)}\n`}
+  for(const r of D){
+    t+=`\n👤 ${r.s.name} — ${r.ses.length} ${r.ses.length>=3&&r.ses.length<=10?'حصص':'حصة'}${bal(r.s)>0?` · 💰 المتبقي ${money(bal(r.s))}`:''}\n`;
+    if(repAll){
+      const g={};r.ses.forEach(x=>{(g[monthKey(x.ts)]=g[monthKey(x.ts)]||[]).push(x)});
+      Object.keys(g).sort().forEach(k=>{t+=`📅 ${monthName(+k)} (${g[k].length})\n`+g[k].map((x,i)=>`  ${i+1}- ${fmtDate(x.ts)} - ${fmtTime(x.ts)}`).join('\n')+'\n'});
+    }else t+=r.ses.map((x,i)=>`${i+1}- ${fmtDate(x.ts)} - ${fmtTime(x.ts)}`).join('\n')+'\n';
+  }
+  if(S.settings.teacher)t+=`\n${S.settings.teacher}`;
+  return t.trim();
+}
+function reportV(){
+  const D=repData(),tot=D.reduce((a,r)=>a+r.ses.length,0);
+  let h=`<div class="card"><h2><span class="e">🗓️</span>الفترة</h2><div class="chips"><button class="chip ${!repAll?'on':''}" onclick="repAll=false;render()">شهر محدد</button><button class="chip ${repAll?'on':''}" onclick="repAll=true;render()">كل الشهور</button></div>`;
+  if(!repAll)h+=`<div class="mnav"><button onclick="repMonth--;render()">→</button><h2>${monthName(repMonth)}</h2><button onclick="repMonth++;render()">←</button></div>`;
+  h+=`<label>الطالب</label><select onchange="repStu=this.value;render()"><option value="">كل الطلاب</option>${S.students.map(s=>`<option value="${s.id}" ${repStu===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`;
+  h+=`<div class="stats" style="grid-template-columns:1fr 1fr"><div class="st s1"><div class="e">📚</div><div class="big">${tot}</div><div class="l">إجمالي الحصص</div></div><div class="st s3"><div class="e">🎓</div><div class="big">${D.length}</div><div class="l">طالب</div></div></div>`;
+  h+=`<div class="tiles" style="margin-bottom:14px"><button class="tile" style="background:linear-gradient(135deg,#22c55e,#16a34a)" onclick="repSend()"><span class="e">💬</span>واتساب</button><button class="tile t1" onclick="repShare()"><span class="e">📤</span>مشاركة</button></div>`;
+  h+=`<button class="btn sec full" style="margin-bottom:14px" onclick="repCopy()">📋 نسخ التقرير</button>`;
+  if(repStu){const s=stu(repStu);const nums=[['الوالدة',s.mother,'👩'],['الوالد',s.father,'👨'],['الطالب',s.phone,'🎓']].filter(x=>x[1]);
+    if(nums.length)h+=`<div class="card"><h2><span class="e">📨</span>ابعته مباشرة لـ</h2><div class="row">${nums.map(([l,n,e])=>`<button class="btn wa" onclick="repSend('${esc(n)}')">${e} ${l}</button>`).join('')}</div></div>`}
+  h+=`<div class="card"><h2><span class="e">👀</span>معاينة</h2>`;
+  h+=D.length?D.map(r=>`<div class="ses" style="align-items:flex-start;flex-direction:column;gap:4px"><div style="display:flex;align-items:center;gap:10px;width:100%"><div class="n" style="${avStyle(r.s.id)}">${esc(initials(r.s.name))}</div><b style="flex:1">${esc(r.s.name)}</b><span class="badge">${r.ses.length}<small>حصة</small></span></div><small class="mu">${r.ses.map(x=>`${fmtDate(x.ts)} ${fmtTime(x.ts)}`).join(' · ')||'لا توجد حصص'}</small></div>`).join(''):`<div class="empty"><span class="e">📭</span>مفيش حصص في الفترة دي</div>`;
+  return h+`</div>`;
+}
+function repSend(num){const t=repText();location.href=`https://wa.me/${num?waNum(num):''}?text=${encodeURIComponent(t)}`}
+async function repShare(){const t=repText();try{if(navigator.share){await navigator.share({text:t});return}}catch(e){if(e.name==='AbortError')return}repCopy()}
+async function repCopy(){const t=repText();try{await navigator.clipboard.writeText(t);toast('📋 اتنسخ — الصقه في أي مكان')}catch(e){toast('⚠️ تعذّر النسخ')}}
+
 // ================= Actions =================
+function moneyForm(id,type){
+  const d=new Date(),dl=new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  $('sheet').innerHTML=`<h2><span class="e">${type==='due'?'➕':'💵'}</span>${type==='due'?'إضافة مبلغ مستحق':'تسجيل دفعة مستلمة'}</h2>
+  <label>المبلغ (${esc(S.settings.cur||'')})</label><input id="mA" type="number" inputmode="decimal" step="any" placeholder="0">
+  <label>ملاحظة (اختياري)</label><input id="mN" placeholder="${type==='due'?'مثلًا: حصص نوفمبر':'مثلًا: كاش'}">
+  <label>التاريخ</label><input id="mT" type="date" value="${dl}">
+  <div class="row" style="margin-top:14px"><button class="btn" id="mOk">حفظ</button><button class="btn sec" onclick="closeModal()">إلغاء</button></div>`;
+  $('mOk').onclick=()=>{const a=parseFloat(String($('mA').value).replace(',','.'));if(!(a>0))return toast('اكتب مبلغ صحيح');
+    const s=stu(id);s.ledger=s.ledger||[];s.ledger.push({id:uid(),type,amt:a,note:$('mN').value.trim(),ts:new Date($('mT').value+'T12:00').getTime()||Date.now()});
+    save();closeModal();render();toast(type==='due'?'✅ اتضاف المبلغ':'✅ اتسجلت الدفعة')};
+  $('modal').classList.add('show');setTimeout(()=>$('mA').focus(),300);
+}
+function delMoney(sid,id){ask('حذف العملية دي؟',()=>{const s=stu(sid);s.ledger=(s.ledger||[]).filter(x=>x.id!==id);save();render()})}
 function toast(t,btn,fn){$('toastTx').textContent=t;const b=$('toastBtn');if(btn){b.textContent=btn;b.classList.remove('hidden');b.onclick=()=>{fn();hideToast()}}else b.classList.add('hidden');$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(hideToast,btn?7000:3000)}
 function hideToast(){$('toast').classList.remove('show')}
 function closeModal(){$('modal').classList.remove('show')}
@@ -272,7 +333,7 @@ function openForm(id){
   <label>رقم الطالب</label><input id="fP" type="tel" value="${esc(s.phone||'')}">
   <label>رقم الوالدة</label><input id="fM" type="tel" value="${esc(s.mother||'')}">
   <label>رقم الوالد</label><input id="fF" type="tel" value="${esc(s.father||'')}">
-  <label>اللوكيشن</label><input id="fL" value="${s.lat!=null?s.lat+', '+s.lng:''}" placeholder="الصق رابط خرائط أو إحداثيات">
+  <label>اللوكيشن</label><input id="fL" value="${s.lat!=null?s.lat+', '+s.lng:esc(s.mapUrl||'')}" placeholder="الصق رابط خرائط أو إحداثيات">
   <button class="btn sec full" style="margin-top:6px" onclick="fillHere()">📌 استخدم موقعي الحالي</button>
   <label>ملاحظات</label><textarea id="fO" placeholder="المادة، الصف، مواعيد ثابتة...">${esc(s.notes||'')}</textarea>
   </div><div class="row" style="margin-top:12px"><button class="btn" onclick="saveStu('${id||''}')">حفظ</button><button class="btn sec" onclick="closeModal()">إلغاء</button></div>`;
@@ -286,8 +347,10 @@ async function fillHere(){
 function saveStu(id){
   const name=$('fN').value.trim();if(!name)return toast('اكتب اسم الطالب');
   const lt=$('fL').value.trim(),L=parseLoc(lt);
-  if(lt&&!L)return toast('⚠️ اللوكيشن مش مفهوم — الصق إحداثيات أو رابط فيه أرقام');
-  const d={name,address:$('fA').value.trim(),phone:$('fP').value.trim(),mother:$('fM').value.trim(),father:$('fF').value.trim(),notes:$('fO').value.trim(),lat:L?L.lat:null,lng:L?L.lng:null};
+  const U=urlOf(lt);
+  if(lt&&!L&&!U)return toast('⚠️ اللوكيشن مش مفهوم — الصق رابط خرائط أو إحداثيات');
+  const d={name,address:$('fA').value.trim(),phone:$('fP').value.trim(),mother:$('fM').value.trim(),father:$('fF').value.trim(),notes:$('fO').value.trim(),lat:L?L.lat:null,lng:L?L.lng:null,mapUrl:!L&&U?U:''};
+  if(!L&&U)setTimeout(()=>toast('🔗 الرابط اتحفظ للخريطة — للتسجيل التلقائي اضغط "احفظ موقعي" وانت عند الطالب'),400);
   if(id)Object.assign(stu(id),d);else{const n={id:uid(),created:Date.now(),...d};S.students.push(n);cur=n.id}
   save();closeModal();go('student',id||cur);
 }
@@ -314,6 +377,7 @@ function fillTpl(id,t){
   let m='';
   if(t==='وصلت')m=`${rel}\nأنا وصلت للحصة 👋${T}`;
   else if(t==='تذكير')m=`${rel}\nتذكير بحصة اليوم إن شاء الله 📚${T}`;
+  else if(t==='المتبقي')m=`${rel}\nللتذكير، المتبقي من حساب الحصص: ${money(bal(s))} 🙏\nوشكرًا${T}`;
   else if(t==='اعتذار')m=`${rel}\nبعتذر عن حصة اليوم، وهنعوضها في أقرب وقت إن شاء الله 🙏${T}`;
   else{const ms=sessOf(id,curMonth).reverse();m=`${rel}\nتقرير حصص ${s.name} لشهر ${monthName(curMonth)}:\nعدد الحصص: ${ms.length}\n`+ms.map((x,i)=>`${i+1}- ${fmtDate(x.ts)} - ${fmtTime(x.ts)}`).join('\n')+T}
   $('waTx').value=m;
@@ -323,7 +387,7 @@ function sendWa(id){
   if(!n)return toast('مفيش رقم');if(!t)return toast('اكتب الرسالة الأول');
   location.href=`https://wa.me/${n}?text=${encodeURIComponent(t)}`;
 }
-function saveSet(){S.settings={radius:Math.max(20,+$('sR').value||150),gapHours:Math.max(0.5,+$('sG').value||3),cc:$('sC').value.replace(/\D/g,''),teacher:$('sT').value.trim()};save();toast('✅ اتحفظ');go('home')}
+function saveSet(){S.settings={radius:Math.max(20,+$('sR').value||150),gapHours:Math.max(0.5,+$('sG').value||3),cc:$('sC').value.replace(/\D/g,''),teacher:$('sT').value.trim(),cur:$('sU').value.trim()};save();toast('✅ اتحفظ');go('home')}
 async function exportData(){
   const name=`hessasy-backup-${new Date().toISOString().slice(0,10)}.json`;
   const file=new File([JSON.stringify(S,null,1)],name,{type:'application/json'});
