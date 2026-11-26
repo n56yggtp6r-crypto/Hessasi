@@ -249,7 +249,7 @@ function studentV(s){
     <button class="btn wa full" style="margin-top:10px;font-size:18px" onclick="sendWa('${s.id}')">💬 إرسال على واتساب</button></div>`;
   }
   // sessions
-  h+=`<div class="card"><h2><span class="e">📅</span>الحصص</h2><div class="mnav"><button onclick="curMonth--;render()">→</button><h2>${monthName(mk)} · <span style="color:#a855f7">${ms.length}</span></h2><button onclick="curMonth++;render()">←</button></div><div style="height:12px"></div>`;
+  h+=`<div class="card"><h2><span class="e">📅</span>الحصص</h2><button class="tile t4" style="width:100%;flex-direction:row;gap:12px;margin-bottom:12px;font-size:17px" onclick="allSes('${s.id}')"><span class="e" style="font-size:32px">📜</span>كل الحصص من البداية (${all.length})</button><div class="mnav"><button onclick="curMonth--;render()">→</button><h2>${monthName(mk)} · <span style="color:#a855f7">${ms.length}</span></h2><button onclick="curMonth++;render()">←</button></div><div style="height:12px"></div>`;
   h+=ms.length?ms.map((x,i)=>`<div class="ses"><div class="n">${ms.length-i}</div><div class="d"><b>${fmtDate(x.ts)}</b><small>${x.auto?'📍 تلقائي':'✍️ يدوي'} · وصلت ${fmtTime(x.ts)}</small></div><button class="del" onclick="delSes('${x.id}')">🗑️</button></div>`).join(''):`<div class="empty"><span class="e">🗓️</span>مفيش حصص في الشهر ده</div>`;
   h+=`<button class="btn full" style="margin-top:6px" onclick="manualSes('${s.id}')">➕ إضافة حصة يدوي</button></div>`;
   h+=`<button class="btn red full" onclick="delStu('${s.id}')">🗑️ حذف الطالب</button>`;
@@ -308,6 +308,26 @@ async function repShare(){const t=repText();try{if(navigator.share){await naviga
 async function repCopy(){const t=repText();try{await navigator.clipboard.writeText(t);toast('📋 اتنسخ — الصقه في أي مكان')}catch(e){toast('⚠️ تعذّر النسخ')}}
 
 // ================= Actions =================
+const fmtShort=ts=>{const d=new Date(ts);return `${DAYS[d.getDay()]} ${d.getMonth()+1}/${d.getDate()}`};
+const ORD=['الأولى','الثانية','الثالثة','الرابعة','الخامسة','السادسة','السابعة','الثامنة','التاسعة','العاشرة'];
+const ordName=i=>i<10?`الحصة ${ORD[i]}`:`الحصة ${i+1}`;
+function allText(id){
+  const s=stu(id),L=sessOf(id).reverse();
+  let t=`📜 سجل حصص ${s.name}\nإجمالي الحصص: ${L.length}\n`;
+  L.forEach((x,i)=>{t+=`\n${i+1}- ${fmtShort(x.ts)} - ${fmtTime(x.ts)}`});
+  if(S.settings.teacher)t+=`\n\n${S.settings.teacher}`;
+  return t;
+}
+function allSes(id){
+  const s=stu(id),L=sessOf(id).reverse();let lastM=null;
+  let h=`<h2><span class="e">📜</span>كل حصص ${esc(s.name)} · ${L.length}</h2><div style="max-height:58vh;overflow:auto;margin:0 -4px;padding:0 4px">`;
+  if(!L.length)h+=`<div class="empty"><span class="e">🗓️</span>لسه مفيش حصص</div>`;
+  L.forEach((x,i)=>{const m=monthKey(x.ts);if(m!==lastM){lastM=m;h+=`<div style="font-weight:800;color:#a855f7;margin:12px 4px 6px">📅 ${monthName(m)}</div>`}
+    h+=`<div class="ses"><div class="n">${i+1}</div><div class="d"><b>${ordName(i)}</b><small>${fmtShort(x.ts)} · ${fmtTime(x.ts)}</small></div></div>`});
+  h+=`</div><div class="row" style="margin-top:12px"><button class="btn wa" onclick="location.href='https://wa.me/?text='+encodeURIComponent(allText('${id}'))">💬 واتساب</button><button class="btn sec" onclick="shareText(allText('${id}'))">📤 مشاركة</button><button class="btn sec" onclick="closeModal()">إغلاق</button></div>`;
+  $('sheet').innerHTML=h;$('modal').classList.add('show');
+}
+async function shareText(t){try{if(navigator.share){await navigator.share({text:t});return}}catch(e){if(e.name==='AbortError')return}try{await navigator.clipboard.writeText(t);toast('📋 اتنسخ')}catch(e){toast('⚠️ تعذّر')}}
 function moneyForm(id,type){
   const d=new Date(),dl=new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
   $('sheet').innerHTML=`<h2><span class="e">${type==='due'?'➕':'💵'}</span>${type==='due'?'إضافة مبلغ مستحق':'تسجيل دفعة مستلمة'}</h2>
